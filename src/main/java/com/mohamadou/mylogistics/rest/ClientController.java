@@ -10,8 +10,16 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/client")
 public class ClientController {
+
+    private  ClientService clientService;
+
     @Autowired
-    private ClientService clientService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    public ClientController() {
+    }
 
     @GetMapping
     public List<Client> getAllClients() {

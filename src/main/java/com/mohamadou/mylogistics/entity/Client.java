@@ -3,7 +3,7 @@ package com.mohamadou.mylogistics.entity;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +14,10 @@ public class Client {
     private String lastName;
     private String phone;
     private String email;
+
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL)
+    private Address address;
 
     public Client() {
     }

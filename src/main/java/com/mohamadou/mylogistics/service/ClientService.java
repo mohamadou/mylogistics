@@ -22,6 +22,9 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
+    public ClientService() {
+    }
+
     public Client getClientById(Long id) {
         return  clientRepository.getById(id);
     }
