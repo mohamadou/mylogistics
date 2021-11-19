@@ -1,28 +1,45 @@
 package com.mohamadou.mylogistics.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import net.bytebuddy.build.ToStringPlugin;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "customer")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
     private String email;
 
-    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY,
-    cascade = CascadeType.ALL)
-    private Address address;
 
-    public Client() {
+   /* @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Address> addresses;*/
+
+    public Customer() {
     }
 
-    public Client(String firstName, String lastName, String phone, String email) {
+    public Customer(String firstName, String lastName, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -68,10 +85,28 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+/*
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }*/
+
+   /* public void addAddress(Address tmpAddresses) {
+
+        if(addresses == null) {
+            addresses = new ArrayList<>();
+        }
+
+        this.addresses.add(tmpAddresses);
+        tmpAddresses.setCustomer(this);
+    }*/
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "Customer{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
