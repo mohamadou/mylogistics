@@ -1,6 +1,14 @@
 package com.mohamadou.mylogistics.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 
 @Entity
 @Table(name = "carrier")
@@ -13,22 +21,6 @@ public class Carrier {
     private String name;
 
     public Carrier(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 }

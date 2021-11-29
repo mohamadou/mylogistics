@@ -1,9 +1,7 @@
 package com.mohamadou.mylogistics.config;
 
 import com.mohamadou.mylogistics.entity.Carrier;
-import com.mohamadou.mylogistics.entity.Customer;
 import com.mohamadou.mylogistics.repository.CarrierRepository;
-import com.mohamadou.mylogistics.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

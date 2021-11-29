@@ -1,10 +1,7 @@
 package com.mohamadou.mylogistics.service;
 
 import com.mohamadou.mylogistics.entity.*;
-import com.mohamadou.mylogistics.repository.AddressRepository;
-import com.mohamadou.mylogistics.repository.CustomerRepository;
-import com.mohamadou.mylogistics.repository.DeliveryRepository;
-import com.mohamadou.mylogistics.repository.ParcelRepository;
+import com.mohamadou.mylogistics.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +18,17 @@ public class DeliveryService {
     private ParcelRepository parcelRepository;
     private CustomerRepository customerRepository;
     private AddressRepository addressRepository;
+    private CarrierRepository carrierRepository;
 
     @Autowired
-    public DeliveryService(DeliveryRepository deliveryRepository, ParcelRepository parcelRepository, CustomerRepository customerRepository, AddressRepository addressRepository) {
-//    public DeliveryService(DeliveryRepository deliveryRepository) {
+    public DeliveryService(DeliveryRepository deliveryRepository, ParcelRepository parcelRepository,
+                           CustomerRepository customerRepository, AddressRepository addressRepository,
+                           CarrierRepository carrierRepository) {
         this.deliveryRepository = deliveryRepository;
         this.parcelRepository = parcelRepository;
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
+        this.carrierRepository = carrierRepository;
     }
 
     public DeliveryService() {
@@ -47,48 +47,63 @@ public class DeliveryService {
          return delivery;
     }
 
-    public void createDelivery(DeliveryRequestCreate deliveryRequestCreate) {
 
+    public void createDelivery(DeliveryRequest deliveryRequest) {
+
+        deliveryRequest.setId(0L);
         Delivery delivery = new Delivery();
-        Optional<Customer> optionalCustomer = customerRepository.findById(deliveryRequestCreate.getCustomerId());
+        Optional<Customer> optionalCustomer = customerRepository.findById(deliveryRequest.getCustomerId());
         if(optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             delivery.setCustomer(customer);
         }
 
-        Optional<Parcel> parcelOptional = parcelRepository.findById(deliveryRequestCreate.getParcelId());
+        Optional<Parcel> parcelOptional = parcelRepository.findById(deliveryRequest.getParcelId());
         parcelOptional.ifPresent(delivery::setParcel);
 
-        Optional<Address> deliveryAddressOptional = addressRepository.findById(deliveryRequestCreate.getDeliveryAddressId());
+        Optional<Address> deliveryAddressOptional = addressRepository.findById(deliveryRequest.getDeliveryAddressId());
         deliveryAddressOptional.ifPresent(delivery::setDeliveryAddress);
 
-        Optional<Address> pickupAddressOptional = addressRepository.findById(deliveryRequestCreate.getPickupAddressId());
+        Optional<Address> pickupAddressOptional = addressRepository.findById(deliveryRequest.getPickupAddressId());
         pickupAddressOptional.ifPresent(delivery::setPickupAddress);
+
+        Optional<Carrier> carrierOptional = carrierRepository.findById(deliveryRequest.getCarrierId());
+        carrierOptional.ifPresent(delivery::setCarrier);
 
         delivery.setDateCreated(LocalDate.now());
         deliveryRepository.save(delivery);
     }
 
-/*    public void createDelivery(Long customerId, Long parcelId, Long delivery_address_id,) {
+    public void updateDelivery(DeliveryRequest deliveryRequestUpdate) {
+
         Delivery delivery = new Delivery();
 
-        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        if(optionalCustomer.isPresent()) {
-            Customer customer = optionalCustomer.get();
-            delivery.setCustomer(customer);
+        Optional<Delivery> optionalDelivery = deliveryRepository.findById(deliveryRequestUpdate.getId()) ;
+        if (optionalDelivery.isPresent()) {
+            delivery.setId(deliveryRequestUpdate.getId());
+
+            Optional<Customer> optionalCustomer = customerRepository.findById(deliveryRequestUpdate.getCustomerId());
+            if(optionalCustomer.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                delivery.setCustomer(customer);
+            }
+
+            Optional<Parcel> parcelOptional = parcelRepository.findById(deliveryRequestUpdate.getParcelId());
+            parcelOptional.ifPresent(delivery::setParcel);
+
+            Optional<Address> deliveryAddressOptional = addressRepository.findById(deliveryRequestUpdate.getDeliveryAddressId());
+            deliveryAddressOptional.ifPresent(delivery::setDeliveryAddress);
+
+            Optional<Address> pickupAddressOptional = addressRepository.findById(deliveryRequestUpdate.getPickupAddressId());
+            pickupAddressOptional.ifPresent(delivery::setPickupAddress);
+
+            Optional<Carrier> carrierOptional = carrierRepository.findById(deliveryRequestUpdate.getCarrierId());
+            carrierOptional.ifPresent(delivery::setCarrier);
+
+            delivery.setDateCreated(LocalDate.now());
+            deliveryRepository.save(delivery);
+        } else {
+            throw new IllegalStateException("Delivery with this id: "+ deliveryRequestUpdate.getId()+ " does not exist");
         }
-
-        delivery.setDateCreated(LocalDate.now());
-
-        Optional<Parcel> parcelOptional = parcelRepository.findById(parcelId);
-        parcelOptional.ifPresent(delivery::setParcel);
-
-
-        deliveryRepository.save(delivery);
-    }*/
-
-
-   /* public Delivery createDelivery(Carrier carrier, Parcel parcel, Customer customer, Address addressPickup, Address addressDelivery){
-        return null;
-    }*/
+    }
 }

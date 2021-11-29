@@ -10,7 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeliveryRequestCreate {
+public class DeliveryRequest {
+
+    private Long id;
 
     private Long customerId;
 
@@ -22,3 +24,4 @@ public class DeliveryRequestCreate {
 
     private Long deliveryAddressId;
 }
+
