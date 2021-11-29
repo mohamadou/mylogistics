@@ -1,6 +1,7 @@
 package com.mohamadou.mylogistics.rest;
 
 import com.mohamadou.mylogistics.entity.Delivery;
+import com.mohamadou.mylogistics.entity.DeliveryRequestCreate;
 import com.mohamadou.mylogistics.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public void createDelivery(@RequestBody Delivery delivery) {
+    public void createDelivery(@RequestBody DeliveryRequestCreate delivery) {
         deliveryService.createDelivery(delivery);
     }
 

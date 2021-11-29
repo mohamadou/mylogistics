@@ -47,21 +47,22 @@ public class DeliveryService {
          return delivery;
     }
 
-    public void createDelivery(Delivery delivery) {
+    public void createDelivery(DeliveryRequestCreate deliveryRequestCreate) {
 
-        Optional<Customer> optionalCustomer = customerRepository.findById(delivery.getCustomerId());
+        Delivery delivery = new Delivery();
+        Optional<Customer> optionalCustomer = customerRepository.findById(deliveryRequestCreate.getCustomerId());
         if(optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             delivery.setCustomer(customer);
         }
 
-        Optional<Parcel> parcelOptional = parcelRepository.findById(delivery.getParcelId());
+        Optional<Parcel> parcelOptional = parcelRepository.findById(deliveryRequestCreate.getParcelId());
         parcelOptional.ifPresent(delivery::setParcel);
 
-        Optional<Address> deliveryAddressOptional = addressRepository.findById(delivery.getDeliveryAddressId());
+        Optional<Address> deliveryAddressOptional = addressRepository.findById(deliveryRequestCreate.getDeliveryAddressId());
         deliveryAddressOptional.ifPresent(delivery::setDeliveryAddress);
 
-        Optional<Address> pickupAddressOptional = addressRepository.findById(delivery.getPickupAddressId());
+        Optional<Address> pickupAddressOptional = addressRepository.findById(deliveryRequestCreate.getPickupAddressId());
         pickupAddressOptional.ifPresent(delivery::setPickupAddress);
 
         delivery.setDateCreated(LocalDate.now());
