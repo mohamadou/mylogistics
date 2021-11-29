@@ -106,4 +106,13 @@ public class DeliveryService {
             throw new IllegalStateException("Delivery with this id: "+ deliveryRequestUpdate.getId()+ " does not exist");
         }
     }
+
+    public void deleteDelivery(Long deliveryId) {
+        Optional<Delivery> deliveryOptional = deliveryRepository.findById(deliveryId);
+
+        if (deliveryOptional.isEmpty()) {
+            throw new IllegalStateException("Delivery does not exist");
+        }
+        deliveryRepository.deleteById(deliveryId);
+    }
 }

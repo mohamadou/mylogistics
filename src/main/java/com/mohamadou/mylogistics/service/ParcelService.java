@@ -31,7 +31,7 @@ public class ParcelService {
         Optional<Parcel> parcelOption = parcelRepository.findById(parcelId);
 
         Parcel parcel = null;
-        if(parcelOption.isPresent()) {
+        if (parcelOption.isPresent()) {
             parcel = parcelOption.get();
         }
 
@@ -44,14 +44,21 @@ public class ParcelService {
         if (parcelExist){
             parcelRepository.deleteById(parcelId);
         }
-        throw new RuntimeException("Parcel with id:"+parcelId+" does not exist");
+        throw new RuntimeException("Parcel with id: "+parcelId+" does not exist");
     }
 
     public Parcel createParcel(Parcel parcel) {
+        parcel.setId(0L);
         return parcelRepository.save(parcel);
     }
 
     public Parcel updateParcel(Parcel parcel) {
-        return parcelRepository.save(parcel);
+        Optional<Parcel> parcelOption = parcelRepository.findById(parcel.getId());
+
+        if (parcelOption.isPresent()) {
+            return parcelRepository.save(parcel);
+        } else {
+            throw new IllegalStateException("Parcel with this id: "+parcel.getId()+" does not exist");
+        }
     }
 }

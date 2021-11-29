@@ -33,13 +33,18 @@ public class ParcelController {
     }
 
     @PostMapping
-    public void saveParcel(@RequestBody Parcel parcel) {
+    public void createParcel(@RequestBody Parcel parcel) {
         parcelService.createParcel(parcel);
     }
 
     @DeleteMapping(path = "{parcelId}")
     public void deleteParcel(@PathVariable Long parcelId) {
         parcelService.deleteParcel(parcelId);
+    }
+
+    @PutMapping()
+    public void updateParcel(@RequestBody Parcel parcel) {
+        parcelService.updateParcel(parcel);
     }
 
 
