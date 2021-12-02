@@ -41,7 +41,7 @@ public class DeliveryController {
         deliveryService.updateDelivery(deliveryRequest);
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "{deliveryId}")
     public void deleteDelivery(@PathVariable Long deliveryId) {
         deliveryService.deleteDelivery(deliveryId);
     }
