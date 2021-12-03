@@ -39,9 +39,4 @@ public class CarrierController {
         carrierService.deleteCarrier(carrierId);
     }
 
-
-
-
-
-
 }
