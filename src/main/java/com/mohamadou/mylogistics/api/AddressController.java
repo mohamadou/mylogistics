@@ -1,4 +1,4 @@
-package com.mohamadou.mylogistics.rest;
+package com.mohamadou.mylogistics.api;
 
 import com.mohamadou.mylogistics.entity.Address;
 import com.mohamadou.mylogistics.entity.Customer;

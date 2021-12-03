@@ -9,9 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 
 @EnableWebSecurity
@@ -34,7 +38,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * InMemoryAuthentication Configuration
-     * @param auth
+     * @param //auth
      * @throws Exception
      */
    // @Override
@@ -50,10 +54,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * InMemoryUserDetailsManager configuration
-     * @param auth
+     * @param //auth
      * @throws Exception
      */
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
         UserDetails user1 = User.withUsername("john").password("1234").authorities("ROL_ADMIN").build();
@@ -63,6 +67,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         inMemoryUserDetailsManager.createUser(user2);
 
         auth.userDetailsService(inMemoryUserDetailsManager);
+    }*/
+
+    @Bean
+    UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean

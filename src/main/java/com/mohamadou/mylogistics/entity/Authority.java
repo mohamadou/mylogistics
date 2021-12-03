@@ -7,32 +7,26 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "carrier")
+@Table(name = "authorities")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Carrier {
+public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-
-    public Carrier(){
-
-    }
-
-   public Carrier(String name) {
-        this.name = name;
-    }
+    private String username;
+    private String authority;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Carrier carrier = (Carrier) o;
-        return id != null && Objects.equals(id, carrier.id);
+        Authority authority = (Authority) o;
+        return id != null && Objects.equals(id, authority.id);
     }
 
     @Override
