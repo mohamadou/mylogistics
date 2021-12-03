@@ -11,7 +11,7 @@ import java.util.List;
 @Configuration
 public class CarrierConfig {
 
-    @Bean
+ /*   @Bean
     CommandLineRunner commandLineRunnerCarrier (CarrierRepository customerRepository) {
         return args -> {
            Carrier express12 = new Carrier(
@@ -31,5 +31,5 @@ public class CarrierConfig {
             );
 
         };
-    }
+    }*/
 }

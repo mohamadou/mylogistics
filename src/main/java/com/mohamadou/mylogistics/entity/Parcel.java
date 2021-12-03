@@ -23,9 +23,9 @@ public class Parcel {
     public Parcel() {
     }
 
-    public Parcel(String description, Double size, Delivery delivery) {
+    public Parcel(String description, Double weight) {
         this.description = description;
-        this.weight = size;
+        this.weight = weight;
     }
 
     public Double getWeight() {

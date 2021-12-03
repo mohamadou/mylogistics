@@ -1,15 +1,9 @@
 package com.mohamadou.mylogistics.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class DeliveryRequest {
 
     private Long id;
@@ -23,5 +17,25 @@ public class DeliveryRequest {
     private Long pickupAddressId;
 
     private Long deliveryAddressId;
+
+    public DeliveryRequest(Long id, Long customerId, Long carrierId, Long parcelId, Long pickupAddressId, Long deliveryAddressId) {
+        this.id = id;
+        this.customerId = customerId;
+        this.carrierId = carrierId;
+        this.parcelId = parcelId;
+        this.pickupAddressId = pickupAddressId;
+        this.deliveryAddressId = deliveryAddressId;
+    }
+
+    public DeliveryRequest(Long customerId, Long carrierId, Long parcelId, Long pickupAddressId, Long deliveryAddressId) {
+        this.customerId = customerId;
+        this.carrierId = carrierId;
+        this.parcelId = parcelId;
+        this.pickupAddressId = pickupAddressId;
+        this.deliveryAddressId = deliveryAddressId;
+    }
+
+    public DeliveryRequest() {
+    }
 }
 
